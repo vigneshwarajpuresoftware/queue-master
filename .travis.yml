@@ -8,22 +8,7 @@ install: true
 env:
 - GROUP=weaveworksdemos COMMIT=$TRAVIS_COMMIT TAG=$TRAVIS_TAG REPO=queue-master;
 script:
-- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-- sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-- sudo apt-get update
-- sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-- docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-- set -e
 - "./scripts/build.sh;"
-- "./test/test.sh unit.py"
-- "./test/test.sh component.py"
-after_success:
-- docker buildx create --name buildkit
-- docker buildx use buildkit
-- docker buildx inspect --bootstrap
-- docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASS}
-- docker buildx build -t ajv21/quemaster:latest --platform linux/amd64 --push .
-- docker buildx rm buildkit
 notifications:
   slack:
     secure: dM7eRa8W7da9jV8V6pQ+swx3FbqYQeJbjoCn5fc1autZWExA4ENEOcyQpqyzIQE6aSyMORiWN4Q7HzhifMu4F+riuXj1SdgoCqiXrDrTcxninkJiBHUtwaE+jVN6uHZBtGLn5umHk3wRp2U20sbp9JzjVbQ/di21dmfgSUcGLWnsEYeaqKJWdCR9Jcar7w3+W3ScKV0/Uim4hd79suk5AfOTzq7KFYW5P+CfGozpWHCLC/qGZPGka6IWs42arSZoqQmjB/S7Vr6d86vdd6BuaYCQSCLicBHfGhhpHT3WDII5IUlR5HOWjv2bwWPG5qZNQQrS8OagOaN4zBxKt2N379bsx6GRBXVFTDGNlJILV2h8w+fjm+rpLHPMSWvKiJarK+0pJteq0a9JuJ49pykNZnyqBadypLRxn6kXxm23xxzjwLMOfi59oO+bZyXjX5claG0Lxor0y069NRfDjPitEXf1g4TVYQviJ1shVGMDilsDx2D3UAWhJrbjYjhkJ/08KitZDTlaak6FgUXs12ioTA4SYOf4XNCI/UiNxSZ1L9RG9AczAXnHigxyfsizDNfP8m/O7x99t3uxP1yrZiLZnTI6EJG+PGziltOhFY9YWLR8+mewNbRprsTRvhvKH4EX1r3dlKya7o0Hgbd1QNEWLhwntB0TWmU+g8IwsS5EDno=
