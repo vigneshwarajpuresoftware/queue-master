@@ -27,5 +27,8 @@ cp $CODE_DIR/target/*.jar $CODE_DIR/docker/$(basename $CODE_DIR)
 
 for m in ./docker/*/; do
     REPO=${GROUP}/$(basename $m)
+    echo $REPO
     $DOCKER_CMD build -t ${REPO}:${COMMIT} $CODE_DIR/$m;
+    echo $CODE_DIR
+    echo $COMMIT
 done;
